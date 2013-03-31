@@ -107,6 +107,7 @@ else {
 		if ($v['type'] == 'number') {
 			$tmp = array_keys($v['values']);
 			if (count($tmp) < 2) {continue;}
+            $tplParamNumber = $modx->getOption('tplParamNumber_'.$k, $scriptProperties, $modx->getOption('tplParamNumber', $scriptProperties, 'tpl.mFilter.param.number'));
 			$rows .= $modx->getChunk($tplParamNumber, array('paramname' => $k, 'min' => min($tmp), 'max' => max($tmp), 'idx' => $idx));
 			$idx++;
 		}
@@ -116,12 +117,14 @@ else {
 			foreach ($v['values'] as $k2 => $v2) {
 				$num = !empty($modx->mSearch->config['fastMode']) ? '' : count($v2);
                 $caption = !empty($v['captions'][$k2])?$v['captions'][$k2]:$k2;
+                $tplParamCheckbox = $modx->getOption('tplParamCheckbox_'.$k, $scriptProperties, $modx->getOption('tplParamCheckbox', $scriptProperties, 'tpl.mFilter.param.checkbox'));
 				$rows .= $modx->getChunk($tplParamCheckbox, array('paramname' => $k, 'value' => $k2, 'caption' => $caption, 'num' => $num, 'idx' => $idx));
 				$idx++;
 			}
 		}
 		$v['paramname'] = $k;
 		$v['rows'] = $rows;
+        $tplParamOuter = $modx->getOption('tplParamOuter_'.$k, $scriptProperties, $modx->getOption('tplParamOuter', $scriptProperties, ''));
         if (!empty($tplParamOuter)) {
         	$result[$k] = $modx->getChunk($tplParamOuter, $v); 
         }
