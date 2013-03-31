@@ -101,7 +101,7 @@ else {
 	if (empty($ids)) {return;}
 	
 	$params = $modx->mSearch->getFilterParams($ids);
-	$result = ''; $idx = 0;
+	$output = ''; $result = array(); $idx = 0;
 	foreach ($params as $k => $v) {
 		$rows = '';
 		if ($v['type'] == 'number') {
@@ -122,8 +122,19 @@ else {
 		}
 		$v['paramname'] = $k;
 		$v['rows'] = $rows;
-		$result .= $modx->getChunk($tplParamOuter, $v); 
+        if (!empty($tplParamOuter)) {
+        	$result[$k] = $modx->getChunk($tplParamOuter, $v); 
+        }
+         else
+            $result[$k] = $rows;
 	}
-
-	return $result;
+    
+    $toPlaceholders = $modx->getOption('toPlaceholders', $scriptProperties, false);
+    $placeholderPrefix = $modx->getOption('placeholderPrefix', $scriptProperties, 'mfilter.');
+    if ($toPlaceholders) {
+        $modx->setPlaceholders($result, $placeholderPrefix);
+    } else
+        $output = implode('', $result);
+    
+	return $output;
 }
