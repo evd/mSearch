@@ -17,7 +17,7 @@ else {
 $ids = trim($ids);
 
 // Filtering resources via Ajax
-if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && $_REQUEST['action'] == 'filter') {
+if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && $_REQUEST['action'] == 'filter') {
 
 	if (!empty($ids)) {
 		$filter = $modx->mSearch->getActiveParams($_POST, $ids);
@@ -79,7 +79,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && $_REQUEST['action']
 		$arr = array(
 			'page.nav' => $modx->getPlaceholder('page.nav')
 			,'rows' => $rows
-			,'sort' => $_POST['sort']
+			,'sort' => isset($_POST['sort'])?$_POST['sort']:''
 		);
 		$rows = $modx->getChunk($tplOuter, array_merge($params, $arr));
 	}
