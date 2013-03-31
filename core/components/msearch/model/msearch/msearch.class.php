@@ -468,6 +468,11 @@ class mSearch {
 								[0] => 1198
 								,[1] => 2015
 								...
+					[captions] => Array(
+						[42] => 'S'
+						,[43] => 'XL'
+						...
+					)
 				*/
 				$tmp = json_decode($tmp, true);
 				if (is_array($tmp) && !empty($tmp)) {

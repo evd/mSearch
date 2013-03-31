@@ -115,7 +115,8 @@ else {
 			ksort($v['values']);
 			foreach ($v['values'] as $k2 => $v2) {
 				$num = !empty($modx->mSearch->config['fastMode']) ? '' : count($v2);
-				$rows .= $modx->getChunk($tplParamCheckbox, array('paramname' => $k, 'value' => $k2, 'num' => $num, 'idx' => $idx));
+                $caption = !empty($v['captions'][$k2])?$v['captions'][$k2]:$k2;
+				$rows .= $modx->getChunk($tplParamCheckbox, array('paramname' => $k, 'value' => $k2, 'caption' => $caption, 'num' => $num, 'idx' => $idx));
 				$idx++;
 			}
 		}
